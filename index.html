@@ -110,8 +110,14 @@
   }
   h1.hero-title .accent{
     color:transparent;
-    background:linear-gradient(95deg, var(--red-bright), var(--ember) 60%, #ff8a6e);
+    background:linear-gradient(95deg, var(--red-bright), var(--ember) 40%, #ff8a6e 55%, var(--red-bright) 75%, var(--ember));
+    background-size:300% 100%;
     -webkit-background-clip:text;background-clip:text;
+    animation:accentShine 6s linear infinite;
+  }
+  @keyframes accentShine{
+    0%{background-position:0% 50%;}
+    100%{background-position:300% 50%;}
   }
   .hero-sub{
     margin-top:26px;
@@ -121,6 +127,33 @@
     line-height:2;
   }
   .hero-actions{display:flex;gap:16px;margin-top:44px;flex-wrap:wrap;}
+
+  /* HERO ENTRANCE ANIMATION */
+  @keyframes heroRise{
+    from{opacity:0;transform:translateY(28px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+  .hero .eyebrow{animation:heroRise .8s ease both;animation-delay:.1s;}
+  .hero .hero-title{animation:heroRise .9s ease both;animation-delay:.25s;}
+  .hero .hero-sub{animation:heroRise .9s ease both;animation-delay:.45s;}
+  .hero .hero-actions{animation:heroRise .9s ease both;animation-delay:.65s;}
+
+  /* CONTINUOUS AMBIENT GLOW BEHIND HERO */
+  .hero::before{
+    content:"";
+    position:absolute;
+    top:-120px;right:10%;
+    width:520px;height:520px;
+    background:radial-gradient(circle, rgba(232,64,47,.28), transparent 70%);
+    filter:blur(10px);
+    pointer-events:none;
+    z-index:0;
+    animation:heroGlow 7s ease-in-out infinite;
+  }
+  @keyframes heroGlow{
+    0%,100%{transform:translate(0,0) scale(1);opacity:.6;}
+    50%{transform:translate(-40px,30px) scale(1.15);opacity:.95;}
+  }
   .btn-primary, .btn-ghost{
     font-family:var(--mono);
     font-size:.92rem;
@@ -327,6 +360,93 @@
 </nav>
 
 <header class="hero">
+  <div class="fire-scene" aria-hidden="true">
+    <svg viewBox="0 0 440 340" width="440" height="340" preserveAspectRatio="xMinYMax meet">
+      <!-- ground -->
+      <line x1="0" y1="318" x2="440" y2="318" stroke="#2b1a1a" stroke-width="2"/>
+
+      <!-- Building -->
+      <g class="fs-building">
+        <rect x="150" y="46" width="150" height="272" rx="4" fill="#161010" stroke="#3a2424" stroke-width="2"/>
+        <!-- roof ledge -->
+        <rect x="146" y="40" width="158" height="10" rx="2" fill="#1e1515"/>
+        <!-- windows grid -->
+        <g class="fs-win-grid">
+          <rect class="fs-win" x="166" y="66"  width="22" height="22" fill="#3a2424"/>
+          <rect class="fs-win" x="199" y="66"  width="22" height="22" fill="#3a2424"/>
+          <rect class="fs-win" x="232" y="66"  width="22" height="22" fill="#3a2424"/>
+          <rect class="fs-win" x="265" y="66"  width="22" height="22" fill="#3a2424"/>
+
+          <rect class="fs-win" x="166" y="104" width="22" height="22" fill="#3a2424"/>
+          <rect class="fs-win fs-fire-win" x="199" y="104" width="22" height="22" fill="#e8402f"/>
+          <rect class="fs-win fs-fire-win2" x="232" y="104" width="22" height="22" fill="#e8402f"/>
+          <rect class="fs-win" x="265" y="104" width="22" height="22" fill="#3a2424"/>
+
+          <rect class="fs-win" x="166" y="142" width="22" height="22" fill="#3a2424"/>
+          <rect class="fs-win" x="199" y="142" width="22" height="22" fill="#3a2424"/>
+          <rect class="fs-win" x="232" y="142" width="22" height="22" fill="#3a2424"/>
+          <rect class="fs-win" x="265" y="142" width="22" height="22" fill="#3a2424"/>
+
+          <rect class="fs-win" x="166" y="180" width="22" height="22" fill="#3a2424"/>
+          <rect class="fs-win" x="199" y="180" width="22" height="22" fill="#3a2424"/>
+          <rect class="fs-win" x="232" y="180" width="22" height="22" fill="#3a2424"/>
+          <rect class="fs-win" x="265" y="180" width="22" height="22" fill="#3a2424"/>
+
+          <rect class="fs-win" x="166" y="218" width="22" height="22" fill="#3a2424"/>
+          <rect class="fs-win" x="199" y="218" width="22" height="22" fill="#3a2424"/>
+          <rect class="fs-win" x="232" y="218" width="22" height="22" fill="#3a2424"/>
+          <rect class="fs-win" x="265" y="218" width="22" height="22" fill="#3a2424"/>
+
+          <rect class="fs-win" x="166" y="256" width="22" height="22" fill="#3a2424"/>
+          <rect class="fs-win" x="199" y="256" width="22" height="22" fill="#3a2424"/>
+          <rect class="fs-win" x="232" y="256" width="22" height="22" fill="#3a2424"/>
+          <rect class="fs-win" x="265" y="256" width="22" height="22" fill="#3a2424"/>
+        </g>
+        <!-- door -->
+        <rect x="212" y="292" width="26" height="26" fill="#1e1515"/>
+        <rect x="150" y="46" width="150" height="272" rx="4" fill="none" class="fs-siren-outline" stroke="#e8402f" stroke-width="3.5"/>
+      </g>
+
+      <!-- Smoke -->
+      <g class="fs-smoke">
+        <circle cx="211" cy="98"  r="10" fill="#6b5450"/>
+        <circle cx="222" cy="80"  r="13" fill="#8a726d"/>
+        <circle cx="206" cy="60"  r="15" fill="#a8918d"/>
+        <circle cx="222" cy="36"  r="17" fill="#c2aeaa"/>
+        <circle cx="243" cy="94"  r="9"  fill="#6b5450"/>
+        <circle cx="250" cy="70"  r="12" fill="#8a726d"/>
+        <circle cx="240" cy="46"  r="14" fill="#a8918d"/>
+      </g>
+
+      <!-- Siren glow -->
+      <circle class="fs-siren-glow" cx="225" cy="160" r="140" fill="#e8402f" opacity="0"/>
+
+      <!-- Water spray -->
+      <path class="fs-water" d="M 108 272 C 130 160, 175 118, 216 168" stroke="#8fd3ff" stroke-width="5" fill="none" opacity="0" stroke-linecap="round"/>
+      <path class="fs-water" d="M 108 276 C 132 168, 178 128, 222 176" stroke="#c7ecff" stroke-width="2.5" fill="none" opacity="0" stroke-linecap="round"/>
+      <g class="fs-droplets">
+        <circle cx="150" cy="230" r="3" fill="#c7ecff"/>
+        <circle cx="170" cy="205" r="2.5" fill="#c7ecff"/>
+        <circle cx="185" cy="190" r="3" fill="#c7ecff"/>
+        <circle cx="130" cy="255" r="2.5" fill="#c7ecff"/>
+      </g>
+
+      <!-- Fire truck -->
+      <g class="fs-truck">
+        <rect x="6" y="252" width="110" height="48" rx="4" fill="#c8281f"/>
+        <rect x="14" y="222" width="46" height="34" rx="3" fill="#c8281f"/>
+        <rect x="19" y="228" width="32" height="18" fill="#8fd3ff" opacity=".85"/>
+        <rect x="60" y="266" width="52" height="8" fill="#f3e9e6" opacity=".8"/>
+        <rect x="60" y="278" width="52" height="6" fill="#f3e9e6" opacity=".5"/>
+        <circle class="fs-truck-siren" cx="38" cy="216" r="6" fill="#ff6a4d"/>
+        <circle cx="30" cy="300" r="15" fill="#161010"/>
+        <circle cx="94" cy="300" r="15" fill="#161010"/>
+        <circle cx="30" cy="300" r="6" fill="#5c5c5c"/>
+        <circle cx="94" cy="300" r="6" fill="#5c5c5c"/>
+      </g>
+    </svg>
+  </div>
+
   <div class="wrap">
     <div class="eyebrow">پروژه متن‌باز · سخت‌افزار و فریمور</div>
     <h1 class="hero-title">وقتی گاز نشت می‌کند،<br><span class="accent">ثانیه‌ها تصمیم می‌گیرند.</span></h1>
@@ -338,6 +458,104 @@
     </div>
   </div>
 </header>
+
+<style>
+  .fire-scene{
+    position:absolute; left:0; bottom:0;
+    width:min(46vw, 520px); height:auto;
+    z-index:0; opacity:.95;
+    pointer-events:none;
+  }
+  .fire-scene svg{ width:100%; height:auto; display:block; }
+  @media(max-width:1100px){ .fire-scene{ width:38vw; } }
+  @media(max-width:860px){ .fire-scene{ display:none; } }
+
+  .fs-win{ opacity:.9; transition:fill .2s; }
+
+  /* Smoke rising and looping fade tied to main story timeline */
+  .fs-smoke{ animation: fsSmokeStory 14s ease-in-out infinite; }
+  .fs-smoke circle{ animation: fsSmokeDrift 2.6s ease-in-out infinite; }
+  .fs-smoke circle:nth-child(1){ animation-delay:0s; }
+  .fs-smoke circle:nth-child(2){ animation-delay:.35s; }
+  .fs-smoke circle:nth-child(3){ animation-delay:.7s; }
+  .fs-smoke circle:nth-child(4){ animation-delay:1.05s; }
+  .fs-smoke circle:nth-child(5){ animation-delay:.2s; }
+  .fs-smoke circle:nth-child(6){ animation-delay:.55s; }
+  .fs-smoke circle:nth-child(7){ animation-delay:.9s; }
+  @keyframes fsSmokeDrift{
+    0%{ transform:translateY(0) scale(1); opacity:.85; }
+    100%{ transform:translateY(-46px) scale(1.35); opacity:0; }
+  }
+  @keyframes fsSmokeStory{
+    0%,49%{ opacity:1; }
+    50.5%,100%{ opacity:0; }
+  }
+
+  /* Fire windows flicker while active */
+  .fs-fire-win{ animation: fsFireFlicker 14s steps(1) infinite, fsFlickerFast .35s ease-in-out infinite; }
+  .fs-fire-win2{ animation: fsFireFlicker 14s steps(1) infinite, fsFlickerFast .3s ease-in-out infinite reverse; }
+  @keyframes fsFireFlicker{
+    0%,49%{ fill:#e8402f; }
+    50%,100%{ fill:#3a2424; }
+  }
+  @keyframes fsFlickerFast{
+    0%,100%{ opacity:1; }
+    50%{ opacity:.55; }
+  }
+
+  /* Siren: building outline + glow flashing, cuts off exactly when fire is out */
+  .fs-siren-outline{ opacity:0; }
+  .fs-siren-glow{ opacity:0; }
+  @keyframes fsSirenWindow{
+    0%,20%{ opacity:0; }
+    20.5%,49.5%{ opacity:1; }
+    50%,100%{ opacity:0; }
+  }
+  .fs-siren-outline{ animation-name: fsSirenWindow, fsStrobe; animation-duration:14s, .4s; animation-timing-function:steps(1), steps(2); animation-iteration-count:infinite, infinite; }
+  .fs-siren-glow{ animation-name: fsSirenWindow, fsGlowStrobe; animation-duration:14s, .4s; animation-timing-function:steps(1), ease-in-out; animation-iteration-count:infinite, infinite; }
+  @keyframes fsStrobe{ 0%,100%{ stroke-opacity:1; } 50%{ stroke-opacity:.1; } }
+  @keyframes fsGlowStrobe{ 0%,100%{ opacity:.4; } 50%{ opacity:0; } }
+
+  .fs-building{ animation: fsBuildingPulse 14s steps(1) infinite; }
+  @keyframes fsBuildingPulse{
+    0%,20%{ filter:none; }
+    20.5%,49.5%{ filter:drop-shadow(0 0 16px rgba(232,64,47,.85)); }
+    50%,100%{ filter:none; }
+  }
+
+  /* Water spray: arcs onto the fire right before it's extinguished */
+  .fs-water{ animation: fsWaterStory 14s steps(1) infinite, fsWaterFlow .5s linear infinite; stroke-dasharray:14 8; }
+  @keyframes fsWaterStory{
+    0%,41%{ opacity:0; }
+    42%,49.5%{ opacity:1; }
+    50%,100%{ opacity:0; }
+  }
+  @keyframes fsWaterFlow{
+    0%{ stroke-dashoffset:22; }
+    100%{ stroke-dashoffset:0; }
+  }
+  .fs-droplets{ animation: fsWaterStory 14s steps(1) infinite; }
+  .fs-droplets circle{ animation: fsDropFall 1s ease-in infinite; }
+  .fs-droplets circle:nth-child(1){ animation-delay:0s; }
+  .fs-droplets circle:nth-child(2){ animation-delay:.25s; }
+  .fs-droplets circle:nth-child(3){ animation-delay:.5s; }
+  .fs-droplets circle:nth-child(4){ animation-delay:.75s; }
+  @keyframes fsDropFall{
+    0%{ transform:translateY(0); opacity:0; }
+    15%{ opacity:1; }
+    100%{ transform:translateY(40px); opacity:0; }
+  }
+
+  /* Fire truck driving in, staying, then leaving */
+  .fs-truck{ animation: fsTruckDrive 14s cubic-bezier(.4,0,.2,1) infinite; }
+  @keyframes fsTruckDrive{
+    0%,20%{ transform:translateX(-160px); }
+    38%,60%{ transform:translateX(0px); }
+    78%,100%{ transform:translateX(-160px); }
+  }
+  .fs-truck-siren{ animation: fsGlowStrobe .35s ease-in-out infinite; }
+</style>
+
 
 <section id="features">
   <div class="wrap">
@@ -505,6 +723,49 @@
   <br><br>
   © 2026 Ali Kamali. Imenyar.
 </footer>
+
+<div id="particles-js" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;"></div>
+
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+particlesJS('particles-js', {
+  particles: {
+    number: { value: 70, density: { enable: true, value_area: 900 } },
+    color: { value: '#e8402f' },
+    shape: { type: 'circle' },
+    opacity: { value: 0.6, random: false },
+    size: { value: 3, random: true },
+    line_linked: {
+      enable: true,
+      distance: 140,
+      color: '#e8402f',
+      opacity: 0.4,
+      width: 1
+    },
+    move: {
+      enable: true,
+      speed: 1.4,
+      direction: 'none',
+      random: false,
+      straight: false,
+      out_mode: 'out',
+      bounce: false
+    }
+  },
+  interactivity: {
+    detect_on: 'canvas',
+    events: {
+      onhover: { enable: true, mode: 'grab' },
+      onclick: { enable: false },
+      resize: true
+    },
+    modes: {
+      grab: { distance: 150, line_linked: { opacity: 0.6 } }
+    }
+  },
+  retina_detect: true
+});
+</script>
 
 </body>
 </html>
