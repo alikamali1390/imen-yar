@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arduino Plant Monitor - Project Details</title>
+
+    <!-- Same CSS imports as main site -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-vsc-dark-plus.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="project.css">
+</head>
+<body>
+    <!-- Navbar with back button -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a href="../../index.html" class="navbar-brand">
+                <i class="fas fa-arrow-left me-2"></i>Back to Portfolio
+            </a>
+            <button class="theme-toggle ms-auto">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero/Intro Section -->
+    <section id="project-hero" class="py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <h1 class="hero-title">Arduino Plant Monitor</h1>
+                    <p class="hero-subtitle">An IoT-based solution for monitoring plant health using Arduino</p>
+                    <div class="tags mt-3">
+                        <span class="tag">Arduino</span>
+                        <span class="tag">IoT</span>
+                        <span class="tag">Sensors</span>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <img src="project-banner.jpg" alt="Project Banner" class="img-fluid rounded shadow-lg">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learning Outcomes -->
+    <section id="learning" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">What You'll Learn</h2>
+            <div class="row g-4">
+                <div class="col-md-4" data-aos="fade-up">
+                    <div class="learning-card">
+                        <i class="fas fa-microchip"></i>
+                        <h3>Arduino Basics</h3>
+                        <p>Understanding Arduino programming and hardware interfacing</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="learning-card">
+                        <i class="fas fa-code"></i>
+                        <h3>Sensor Integration</h3>
+                        <p>Working with multiple sensors and displaying data</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="learning-card">
+                        <i class="fas fa-project-diagram"></i>
+                        <h3>Circuit Design</h3>
+                        <p>Creating and understanding electronic circuits</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Components Required -->
+    <section id="components" class="py-5">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Components Required</h2>
+            <div class="row">
+                <div class="col-lg-6" data-aos="fade-up">
+                    <h3>Hardware Components</h3>
+                    <div class="component-list">
+                        <div class="component-item">
+                            <img src="components/arduino.jpg" alt="Arduino Nano">
+                            <div>
+                                <h4>Arduino Nano</h4>
+                                <p>Main microcontroller board</p>
+                            </div>
+                        </div>
+                        <!-- Add more components similarly -->
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                    <h3>Required Software</h3>
+                    <ul class="software-list">
+                        <li><i class="fas fa-download"></i> Arduino IDE</li>
+                        <li><i class="fas fa-code"></i> DHT Library</li>
+                        <li><i class="fas fa-code"></i> OLED Library</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Circuit & Wiring -->
+    <section id="circuit" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Circuit Diagram</h2>
+            <div class="row align-items-center">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <img src="circuit-diagram.png" alt="Circuit Diagram" class="img-fluid rounded shadow">
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="connection-steps">
+                        <h3>Wiring Instructions</h3>
+                        <ol>
+                            <li>Connect DHT11 sensor to pin D2</li>
+                            <li>Connect soil moisture sensor to A0</li>
+                            <li>Connect OLED display using I2C pins</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Source Code -->
+    <section id="code" class="py-5">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Source Code</h2>
+            <div class="code-block" data-aos="fade-up">
+                <div class="code-header">
+                    <span>plant_monitor.ino</span>
+                    <button class="btn btn-primary btn-sm" onclick="downloadCode()">
+                        <i class="fas fa-download me-2"></i>Download
+                    </button>
+                </div>
+                <pre><code class="language-cpp" id="arduino-code">
+// Arduino code will be loaded here
+                </code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Setup & Run -->
+    <section id="setup" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Setup Instructions</h2>
+            <div class="setup-steps" data-aos="fade-up">
+                <!-- Setup steps will be added here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Future Improvements -->
+    <section id="improvements" class="py-5">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Future Improvements</h2>
+            <div class="row g-4">
+                <!-- Improvement cards will be added here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Projects -->
+    <section id="related" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Related Projects</h2>
+            <div class="row g-4">
+                <!-- Related project cards will be added here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Comments Section -->
+    <section id="comments" class="py-5">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Comments</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <form id="comment-form" class="comment-form" data-aos="fade-up">
+                        <!-- Comment form will be added here -->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-4 text-center">
+        <div class="container">
+            <div class="social-icons mb-4">
+                <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                <a href="mailto:ak.dev889@gmail.com" class="social-icon"><i class="fas fa-envelope"></i></a>
+            </div>
+            <p class="text-muted">&copy; <span id="year"></span> Ali Kamali. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js"></script>
+    <script src="../../script.js"></script>
+    <script src="project.js"></script>
+</body>
+</html>
