@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ایمن‌یار | سامانه هوشمند تشخیص نشت گاز</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-void: #0a0707;
+    --bg-panel: #130d0d;
+    --bg-panel-2: #1a1212;
+    --line: #2b1a1a;
+    --line-soft: #201414;
+    --red: #b0231c;
+    --red-bright: #e8402f;
+    --red-dim: #5c1712;
+    --ember: #ff6a4d;
+    --text: #f3e9e6;
+    --text-dim: #a8918d;
+    --text-faint: #6b5450;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Vazirmatn', sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg-void);
+    color:var(--text);
+    font-family:var(--sans);
+    overflow-x:hidden;
+    position:relative;
+  }
+  body::before{
+    content:"";
+    position:fixed;inset:0;
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -5%, rgba(176,35,28,.22), transparent 60%),
+      radial-gradient(ellipse 700px 600px at 100% 20%, rgba(176,35,28,.12), transparent 55%);
+    pointer-events:none;
+    z-index:0;
+  }
+  body::after{
+    content:"";
+    position:fixed;inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.015) 1px, transparent 1px);
+    background-size: 42px 42px;
+    pointer-events:none;
+    z-index:0;
+  }
+  .wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 28px;}
+
+  /* NAV */
+  nav{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(14px);
+    background:rgba(10,7,7,.72);
+    border-bottom:1px solid var(--line-soft);
+  }
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:76px;}
+  .brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:1.15rem;letter-spacing:.5px;}
+  .brand .dot{
+    width:11px;height:11px;border-radius:50%;
+    background:var(--red-bright);
+    box-shadow:0 0 0 4px rgba(232,64,47,.15), 0 0 18px rgba(232,64,47,.7);
+    animation:pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{box-shadow:0 0 0 4px rgba(232,64,47,.15), 0 0 18px rgba(232,64,47,.7);}
+    50%{box-shadow:0 0 0 7px rgba(232,64,47,.05), 0 0 30px rgba(232,64,47,.9);}
+  }
+  .navlinks{display:flex;gap:34px;font-size:.92rem;color:var(--text-dim);}
+  .navlinks a{color:inherit;text-decoration:none;transition:color .2s;}
+  .navlinks a:hover{color:var(--ember);}
+  .navcta{
+    border:1px solid var(--red);
+    color:var(--text);
+    padding:9px 20px;border-radius:3px;
+    font-size:.88rem;text-decoration:none;
+    transition:.25s;
+    font-family:var(--mono);
+  }
+  .navcta:hover{background:var(--red);box-shadow:0 0 24px rgba(176,35,28,.5);}
+
+  /* HERO */
+  .hero{
+    padding:110px 0 90px;
+    position:relative;
+    border-bottom:1px solid var(--line-soft);
+  }
+  .eyebrow{
+    font-family:var(--mono);
+    color:var(--ember);
+    font-size:.8rem;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    display:flex;align-items:center;gap:10px;
+    margin-bottom:26px;
+  }
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--red-bright);}
+  h1.hero-title{
+    font-size:clamp(2.6rem, 6vw, 5rem);
+    font-weight:800;
+    line-height:1.12;
+    letter-spacing:-1px;
+    max-width:900px;
+  }
+  h1.hero-title .accent{
+    color:transparent;
+    background:linear-gradient(95deg, var(--red-bright), var(--ember) 60%, #ff8a6e);
+    -webkit-background-clip:text;background-clip:text;
+  }
+  .hero-sub{
+    margin-top:26px;
+    font-size:1.18rem;
+    color:var(--text-dim);
+    max-width:620px;
+    line-height:2;
+  }
+  .hero-actions{display:flex;gap:16px;margin-top:44px;flex-wrap:wrap;}
+  .btn-primary, .btn-ghost{
+    font-family:var(--mono);
+    font-size:.92rem;
+    padding:15px 30px;
+    border-radius:3px;
+    text-decoration:none;
+    display:inline-flex;align-items:center;gap:10px;
+    transition:.25s;
+  }
+  .btn-primary{
+    background:linear-gradient(100deg, var(--red) 0%, var(--red-bright) 100%);
+    color:#fff;
+    box-shadow:0 8px 30px -8px rgba(232,64,47,.6);
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 34px -6px rgba(232,64,47,.75);}
+  .btn-ghost{
+    border:1px solid var(--line);
+    color:var(--text-dim);
+  }
+  .btn-ghost:hover{border-color:var(--red-bright);color:var(--text);}
+
+  /* HERO VISUAL - mesh nodes */
+  .hero-visual{
+    margin-top:80px;
+    border:1px solid var(--line);
+    background:var(--bg-panel);
+    border-radius:6px;
+    padding:36px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-visual::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(circle at 50% 0%, rgba(176,35,28,.15), transparent 60%);
+  }
+  .mesh-row{display:flex;justify-content:space-between;align-items:center;gap:20px;position:relative;z-index:1;flex-wrap:wrap;}
+  .node{
+    flex:1;min-width:150px;
+    background:var(--bg-panel-2);
+    border:1px solid var(--line);
+    border-radius:5px;
+    padding:18px 20px;
+    font-family:var(--mono);
+    position:relative;
+  }
+  .node.central{border-color:var(--red);box-shadow:0 0 26px -6px rgba(176,35,28,.5);}
+  .node .label{font-size:.72rem;color:var(--text-faint);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
+  .node .val{font-size:1rem;color:var(--text);font-weight:600;}
+  .node .status{display:flex;align-items:center;gap:7px;margin-top:10px;font-size:.75rem;color:var(--text-dim);}
+  .status .led{width:7px;height:7px;border-radius:50%;background:#3aa15c;box-shadow:0 0 8px #3aa15c;}
+  .node.central .status .led{background:var(--red-bright);box-shadow:0 0 10px var(--red-bright);}
+  .conn{width:40px;height:1px;background:linear-gradient(90deg, var(--red-dim), var(--red-bright), var(--red-dim));position:relative;flex-shrink:0;}
+  .conn::after{content:"";position:absolute;top:-2px;right:0;width:5px;height:5px;border-radius:50%;background:var(--ember);animation:travel 2.5s linear infinite;}
+  @keyframes travel{0%{right:0;opacity:0;}10%{opacity:1;}90%{opacity:1;}100%{right:100%;opacity:0;}}
+
+  /* SECTIONS */
+  section{padding:100px 0;border-bottom:1px solid var(--line-soft);}
+  .section-head{margin-bottom:56px;max-width:640px;}
+  .section-tag{font-family:var(--mono);color:var(--ember);font-size:.8rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;}
+  .section-title{font-size:clamp(1.8rem,3.4vw,2.6rem);font-weight:800;line-height:1.3;}
+  .section-title span{color:var(--text-dim);font-weight:400;}
+
+  /* FEATURES */
+  .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;}
+  .feature{background:var(--bg-panel);padding:34px 30px;transition:.25s;position:relative;}
+  .feature:hover{background:var(--bg-panel-2);}
+  .feature:hover::before{content:"";position:absolute;top:0;right:0;width:3px;height:100%;background:var(--red-bright);box-shadow:0 0 14px var(--red-bright);}
+  .feature .fnum{font-family:var(--mono);color:var(--red-dim);font-size:.78rem;margin-bottom:16px;}
+  .feature h3{font-size:1.12rem;margin-bottom:12px;font-weight:700;}
+  .feature p{color:var(--text-dim);font-size:.92rem;line-height:1.9;}
+
+  /* ARCHITECTURE / FLOW */
+  .flow{display:flex;align-items:center;gap:0;flex-wrap:wrap;justify-content:center;margin-top:20px;}
+  .flow-step{
+    background:var(--bg-panel);border:1px solid var(--line);border-radius:6px;
+    padding:26px 24px;min-width:190px;text-align:center;position:relative;
+  }
+  .flow-step.alert{border-color:var(--red);background:linear-gradient(180deg, rgba(176,35,28,.12), var(--bg-panel));}
+  .flow-step .ficon{font-family:var(--mono);font-size:1.6rem;color:var(--ember);margin-bottom:10px;}
+  .flow-step h4{font-size:.95rem;margin-bottom:6px;}
+  .flow-step p{font-size:.78rem;color:var(--text-faint);}
+  .flow-arrow{
+    width:34px;height:1px;
+    background:linear-gradient(90deg, var(--red-dim), var(--red-bright), var(--red-dim));
+    position:relative;flex-shrink:0;margin:0 6px;
+  }
+  .flow-arrow::after{
+    content:"";position:absolute;top:50%;left:50%;
+    width:6px;height:6px;border-radius:50%;
+    background:var(--ember);
+    transform:translate(-50%,-50%);
+    box-shadow:0 0 8px var(--ember);
+  }
+
+  /* TECH STACK */
+  .stack-list{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px;}
+  .stack-pill{
+    font-family:var(--mono);font-size:.85rem;color:var(--text-dim);
+    border:1px solid var(--line);padding:9px 18px;border-radius:30px;
+    transition:.2s;
+  }
+  .stack-pill:hover{border-color:var(--red-bright);color:var(--text);}
+
+  /* CODE PANEL */
+  .code-panel{
+    background:var(--bg-panel);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:40px;
+  }
+  .code-head{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 20px;border-bottom:1px solid var(--line);background:var(--bg-panel-2);
+  }
+  .code-dots{display:flex;gap:7px;}
+  .code-dots span{width:10px;height:10px;border-radius:50%;background:var(--line);}
+  .code-dots span:nth-child(1){background:#5c1712;}
+  .code-file{font-family:var(--mono);font-size:.8rem;color:var(--text-faint);}
+  pre{padding:26px;overflow-x:auto;font-family:var(--mono);font-size:.85rem;line-height:1.9;color:var(--text-dim);direction:ltr;text-align:left;}
+  pre .kw{color:var(--red-bright);}
+  pre .fn{color:var(--ember);}
+  pre .cm{color:var(--text-faint);}
+  pre .str{color:#e0a878;}
+
+  /* ABOUT */
+  .about-grid{display:grid;grid-template-columns:220px 1fr;gap:50px;align-items:start;}
+  .avatar-block{
+    width:190px;height:190px;border-radius:8px;
+    background:linear-gradient(155deg, var(--bg-panel-2), var(--bg-void));
+    border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    position:relative;overflow:hidden;
+  }
+  .avatar-block::before{
+    content:"AK";font-family:var(--mono);font-weight:700;font-size:2.6rem;color:var(--text-faint);
+    letter-spacing:2px;
+  }
+  .avatar-block::after{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(circle at 30% 20%, rgba(176,35,28,.35), transparent 55%);
+  }
+  .about-text h3{font-size:1.5rem;margin-bottom:16px;}
+  .about-text p{color:var(--text-dim);line-height:2;font-size:1rem;max-width:560px;margin-bottom:14px;}
+  .about-tags{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;}
+  .about-tags span{font-family:var(--mono);font-size:.78rem;color:var(--red-bright);border:1px solid var(--red-dim);padding:6px 14px;border-radius:3px;}
+
+  /* CTA / CONTACT */
+  .cta-panel{
+    background:linear-gradient(135deg, var(--bg-panel), var(--bg-panel-2));
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:70px 50px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .cta-panel::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(ellipse 500px 260px at 50% 0%, rgba(176,35,28,.25), transparent 65%);
+  }
+  .cta-panel h2{font-size:clamp(1.7rem,3vw,2.3rem);font-weight:800;margin-bottom:16px;position:relative;}
+  .cta-panel p{color:var(--text-dim);margin-bottom:36px;position:relative;font-size:1.02rem;}
+  .cta-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;position:relative;}
+  .contact-row{display:flex;justify-content:center;gap:40px;margin-top:44px;flex-wrap:wrap;position:relative;font-family:var(--mono);font-size:.92rem;}
+  .contact-row a{color:var(--text-dim);text-decoration:none;display:flex;align-items:center;gap:9px;transition:.2s;}
+  .contact-row a:hover{color:var(--ember);}
+  .contact-row .ic{color:var(--red-bright);}
+  .social-row{display:flex;justify-content:center;gap:22px;margin-top:36px;position:relative;}
+  .social-circle{
+    width:56px;height:56px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--bg-panel-2);border:1px solid var(--line);
+    color:var(--text-dim);
+    transition:.25s;
+  }
+  .social-circle:hover{
+    border-color:var(--red-bright);color:var(--text);
+    box-shadow:0 0 22px -4px rgba(232,64,47,.6);
+    transform:translateY(-3px);
+  }
+
+  footer{padding:44px 0;text-align:center;color:var(--text-faint);font-size:.85rem;font-family:var(--mono);}
+
+  @media(max-width:860px){
+    .feature-grid{grid-template-columns:1fr;}
+    .about-grid{grid-template-columns:1fr;}
+    .avatar-block{width:130px;height:130px;}
+    .navlinks{display:none;}
+    .flow-arrow{width:1px;height:34px;margin:6px 0;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand"><span class="dot"></span> ایمن‌یار</div>
+    <div class="navlinks">
+      <a href="#features">امکانات</a>
+      <a href="#architecture">معماری</a>
+      <a href="#why">چرا این پروژه</a>
+      <a href="#stack">فناوری</a>
+      <a href="#about">درباره من</a>
+    </div>
+    <a class="navcta" href="https://github.com/AliKamali-elec/Imen-yar" target="_blank">GitHub ↗</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">پروژه متن‌باز · سخت‌افزار و فریمور</div>
+    <h1 class="hero-title">وقتی گاز نشت می‌کند،<br><span class="accent">ثانیه‌ها تصمیم می‌گیرند.</span></h1>
+    <p class="hero-sub">
+      ایمن‌یار یک سامانه هوشمند تشخیص نشت گاز خانگی است؛ چند واحد ESP32 که با ارتباط بی‌سیم مش با یک دستگاه مرکزی هماهنگ می‌شوند، در لحظه هشدار محلی می‌دهند و به‌صورت خودکار با پیامک یا تماس صوتی، مالک واحد و نگهبان ساختمان را مطلع می‌کنند.
+    </p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="https://github.com/AliKamali-elec/Imen-yar" target="_blank">مشاهده کد پروژه →</a>
+    </div>
+  </div>
+</header>
+
+<section id="features">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-tag">امکانات</div>
+      <h1 class="section-title">هر واحد یک نگهبان دارد، <span>و مرکز همه را می‌بیند.</span></h1>
+    </div>
+    <div class="feature-grid">
+      <div class="feature">
+        <div class="fnum">۰۱</div>
+        <h3>تشخیص لحظه‌ای نشت گاز</h3>
+        <p>سنسور MQ135 در هر واحد به‌صورت پیوسته غلظت گاز را می‌سنجد و در صورت عبور از آستانه تعریف‌شده، هشدار را فوراً صادر می‌کند.</p>
+      </div>
+      <div class="feature">
+        <div class="fnum">۰۲</div>
+        <h3>آژیر محلی و مرکزی</h3>
+        <p>هنگام بروز نشتی، هم بازر واحد مربوطه فعال می‌شود و هم بازر دستگاه مرکزی، تا هشدار در همان لحظه شنیده شود.</p>
+      </div>
+      <div class="feature">
+        <div class="fnum">۰۳</div>
+        <h3>اطلاع‌رسانی خودکار</h3>
+        <p>از طریق سرویس کاوه‌نگار، پیامک یا تماس صوتی به‌صورت خودکار برای مالک واحد و نگهبان ساختمان ارسال می‌شود.</p>
+      </div>
+      <div class="feature">
+        <div class="fnum">۰۴</div>
+        <h3>پنل وب بدون رفرش</h3>
+        <p>وضعیت لحظه‌ای همه واحدها روی یک پنل وب محلی نمایش داده می‌شود؛ بدون نیاز به بارگذاری مجدد صفحه.</p>
+      </div>
+      <div class="feature">
+        <div class="fnum">۰۵</div>
+        <h3>تنظیمات محافظت‌شده با رمز</h3>
+        <p>شماره تماس هر واحد و نگهبان، و روش اعلان، از طریق یک پنل تنظیمات رمزدار قابل‌تغییر است.</p>
+      </div>
+      <div class="feature">
+        <div class="fnum">۰۶</div>
+        <h3>ارتباط مش بلوتوثی</h3>
+        <p>ارتباط بین دستگاه‌های واحد و مرکزی از طریق بلوتوث برقرار می‌شود و تنظیمات در حافظه داخلی ماندگار می‌ماند.</p>
+      </div>
+      <div class="feature">
+        <div class="fnum">۰۷</div>
+        <h3>قطع خودکار گاز با رله</h3>
+        <p>با تشخیص نشتی، رله متصل به شیر برقی فعال شده و ورودی گاز واحد به‌صورت خودکار قطع می‌شود.</p>
+      </div>
+      <div class="feature">
+        <div class="fnum">۰۸</div>
+        <h3>پشتیبان‌گیری برق با UPS</h3>
+        <p>در صورت قطعی برق، سامانه با UPS تا ۶ ساعت بدون نیاز به برق شهری به کار خود ادامه می‌دهد.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="architecture">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-tag">معماری</div>
+      <h1 class="section-title">از سنسور تا <span>زنگ گوشی نگهبان.</span></h1>
+    </div>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="ficon">01</div>
+        <h4>سنجش گاز</h4>
+        <p>MQ135 در هر واحد</p>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-step">
+        <div class="ficon">02</div>
+        <h4>آژیر محلی</h4>
+        <p>فعال‌سازی بازر واحد</p>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-step">
+        <div class="ficon">03</div>
+        <h4>ارسال مش</h4>
+        <p>اتصال بلوتوثی به مرکز</p>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-step alert">
+        <div class="ficon">04</div>
+        <h4>هشدار مرکزی</h4>
+        <p>بازر مرکز + پنل وب</p>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-step alert">
+        <div class="ficon">05</div>
+        <h4>تماس / پیامک</h4>
+        <p>اطلاع به مالک و نگهبان</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-tag">چرا این پروژه</div>
+      <h1 class="section-title">فراتر از یک قطعه سخت‌افزار، <span>یک راه‌حل کامل.</span></h1>
+    </div>
+    <div class="feature-grid">
+      <div class="feature">
+        <div class="fnum">۰۱</div>
+        <h3>موضوع، محتوا و ایده</h3>
+        <p>ایمن‌یار یک مسئله‌ی واقعی و پرکاربرد در ایمنی خانگی را هدف گرفته: تشخیص زودهنگام نشت گاز و واکنش خودکار به آن. ایده صرفاً «هشدار دادن» نیست؛ زنجیره‌ای کامل از تشخیص تا واکنش را پوشش می‌دهد، از حسگر و هشدار محلی تا قطع گاز و اطلاع‌رسانی به مالک و نگهبان.</p>
+      </div>
+      <div class="feature">
+        <div class="fnum">۰۲</div>
+        <h3>خلاقیت و نوآوری</h3>
+        <p>نوآوری پروژه در ترکیب چند لایه با هم است: ارتباط مش بین چند دستگاه به‌جای معماری تک‌واحدی، واکنش فیزیکی خودکار با رله و شیر برقی به‌جای صرفاً هشدار صوتی، تداوم عملکرد در قطعی برق با UPS، و پنل وب محلی بدون نیاز به سرویس ابری.</p>
+      </div>
+      <div class="feature">
+        <div class="fnum">۰۳</div>
+        <h3>رعایت اصول پژوهش و کیفیت پیاده‌سازی</h3>
+        <p>ماندگاری تنظیمات در حافظه داخلی، محافظت پنل تنظیمات با رمز عبور، تفکیک وظایف بین کد مرکزی و واحد، و مستندسازی کامل روی گیت‌هاب؛ نشان‌دهنده‌ی نگاه مهندسی‌شده به جای کدنویسی موقتی است.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="stack">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-tag">پشته فناوری</div>
+      <h1 class="section-title">ابزارهایی که <span>ایمن‌یار را ساخته‌اند.</span></h1>
+    </div>
+    <div class="stack-list">
+      <span class="stack-pill">ESP32</span>
+      <span class="stack-pill">C++ / Arduino Framework</span>
+      <span class="stack-pill">PlatformIO</span>
+      <span class="stack-pill">MQ135 Gas Sensor</span>
+      <span class="stack-pill">Bluetooth Mesh</span>
+      <span class="stack-pill">Kavenegar SMS/Voice API</span>
+      <span class="stack-pill">ESP32 Preferences (NVS)</span>
+      <span class="stack-pill">پنل وب Real-time</span>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-tag">درباره من</div>
+      <h1 class="section-title">پشت این پروژه <span>کیست؟</span></h1>
+    </div>
+    <div class="about-text" style="max-width:640px;">
+      <p>
+        من علاقه‌مند به سیستم‌های نهفته (Embedded Systems) و لینوکس هستم و در کنار آن، به‌عنوان توسعه‌دهنده ++C هم کار می‌کنم. از طراحی مدار و لحیم‌کاری تا نوشتن فریمور، دوست دارم ایده‌ها را از صفر تا یک دستگاه واقعی و کارکردی جلو ببرم.
+      </p>
+      <p>
+        ایمن‌یار حاصل همین نگاه من است: ترکیب سخت‌افزار ارزان و در دسترس با فریمور دقیق، برای حل یک مشکل واقعی و حیاتی در خانه‌ها.
+      </p>
+      <div class="about-tags">
+        <span>Embedded Systems</span>
+        <span>C++ Developer</span>
+        <span>ESP32 / Arduino</span>
+        <span>Linux</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <a href="https://github.com/AliKamali-elec" target="_blank" style="color:var(--text-dim);text-decoration:none;">My GitHub</a>
+  <br><br>
+  <a href="mailto:ak.dev889@gmail.com" style="color:var(--text-dim);text-decoration:none;">ak.dev889@gmail.com</a>
+  <br><br>
+  © 2026 Ali Kamali. Imenyar.
+</footer>
+
+</body>
+</html>
